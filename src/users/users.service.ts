@@ -18,17 +18,18 @@ export class UsersService {
         return await this.repository.findOne({where: {id: Equal(idToFind)}});
     }
 
-    async create(firstnameToCreate:string, lastnameToCreate:string, ageToCreate:number): Promise<User> {
+    async create(firstnameToCreate:string, lastnameToCreate:string, ageToCreate:number, passwordToCreate:string): Promise<User> {
         const user = await this.repository.create({
             lastname: lastnameToCreate, 
             firstname: firstnameToCreate, 
-            age: ageToCreate 
+            age: ageToCreate,
+            password: passwordToCreate
         })
         this.repository.save(user);
         return user;
     }
 
-    async update(idToFind:number, lastname:string, firstname:string, age:number) : Promise<User> {
+    async update(idToFind:number, lastname:string, firstname:string, age:number, password:string) : Promise<User> {
         const user = await this.repository.findOne({where: {id: Equal(idToFind)}});
         if (user !== undefined) { // si l'utilisateur ayant cet id existe, on modifie les éléments fournis 
             if (lastname !== undefined) {
@@ -36,6 +37,12 @@ export class UsersService {
             }
             if (firstname !== undefined) {
                 user.firstname = firstname;
+            } 
+            if (age !== undefined) {
+                user.age = age
+            }
+            if (password !== undefined) {
+                user.password = password
             }
         }
         return user;

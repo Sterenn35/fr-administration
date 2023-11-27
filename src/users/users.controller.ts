@@ -41,7 +41,7 @@ export class UsersController {
         summary: "Creates a User"
     })
     public async create(@Body() input: UserInput): Promise<User> {
-        return this.service.create(input.firstname, input.lastname, input.age);
+        return this.service.create(input.firstname, input.lastname, input.age, input.password);
     }
 
     @Put(':id')
@@ -49,7 +49,7 @@ export class UsersController {
         summary: "Updates a User"
     })
     async update(@Param() param, @Body() input:any) : Promise<void> {
-        if(await this.service.update(+param.id, input.lastname, input.firstname, input.age) === undefined) throw new HttpException(`Could not find a user with the id ${+param.id}`, HttpStatus.NOT_FOUND);
+        if(await this.service.update(+param.id, input.lastname, input.firstname, input.age, input.password) === undefined) throw new HttpException(`Could not find a user with the id ${+param.id}`, HttpStatus.NOT_FOUND);
     }
 
     @Delete(':id')

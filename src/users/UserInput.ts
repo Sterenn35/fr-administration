@@ -24,4 +24,11 @@ export class UserInput {
         type: Number,
     })
     public age: number;
+
+    @ApiProperty({
+        description: 'The passworf of the user',
+        example:'mot2P@sse',
+        type: String,
+    })
+    public password: string;
 }

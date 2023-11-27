@@ -10,4 +10,6 @@ export class User {
     public lastname:string
     @Column()
     public age:number
+    @Column()
+    public password:string
 }

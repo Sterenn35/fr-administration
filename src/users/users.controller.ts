@@ -3,7 +3,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param , HttpException, HttpSt
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UserInput } from 'src/donnees/UserInput';
+import { UserInput } from './UserInput';
 
 @ApiTags('users')
 @Controller('users')

@@ -18,7 +18,7 @@ export class UsersService {
         return await this.repository.findOne({where: {id: Equal(idToFind)}});
     }
 
-    async create(lastnameToCreate:string, firstnameToCreate:string, ageToCreate:number): Promise<User> {
+    async create(firstnameToCreate:string, lastnameToCreate:string, ageToCreate:number): Promise<User> {
         const user = await this.repository.create({
             lastname: lastnameToCreate, 
             firstname: firstnameToCreate, 

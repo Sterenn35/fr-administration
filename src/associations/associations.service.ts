@@ -32,7 +32,7 @@ export class AssociationsService {
         }
     }
 
-    async create(usersToAdd:number[], name:string): Promise<Association> {
+    async create(idOfUsersToAdd:number[], name:string): Promise<Association> {
         const association = await this.repository.create({
             name : name,
             users : []});
@@ -42,7 +42,7 @@ export class AssociationsService {
                         //.then(user => association.users.push(user))
                         //.catch(error => console.log(error));
         //}
-        association.users = (await this.service.getAll()).filter((user => usersToAdd.indexOf(user.id) >= 0))
+        association.users = (await this.service.getAll()).filter((user => idOfUsersToAdd.indexOf(user.id) >= 0))
         return this.repository.save(association);
     }
 

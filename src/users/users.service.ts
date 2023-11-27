@@ -20,7 +20,6 @@ export class UsersService {
 
     async create(lastnameToCreate:string, firstnameToCreate:string, ageToCreate:number): Promise<User> {
         const user = await this.repository.create({
-            id: 0, 
             lastname: lastnameToCreate, 
             firstname: firstnameToCreate, 
             age: ageToCreate 

@@ -6,6 +6,7 @@ import { AssociationsModule } from './associations/associations.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
 import { Association } from './associations/association.entity';
+import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -15,6 +16,6 @@ import { AuthModule } from './auth/auth.module';
               entities: [User, Association],
               synchronize: true}),UsersModule, AssociationsModule, AuthModule],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [AppService, AuthService]
 })
 export class AppModule {}

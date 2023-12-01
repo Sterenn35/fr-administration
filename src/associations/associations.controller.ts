@@ -3,7 +3,7 @@ import { AssociationsService } from './associations.service';
 import { Association } from './association.entity';
 import { User } from 'src/users/user.entity';
 import { ApiCreatedResponse, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
-import { AssociationInput } from 'src/donnees/AssociationInput';
+import { AssociationInput } from 'src/associations/AssociationInput';
 
 @ApiTags('associations')
 @Controller('associations')

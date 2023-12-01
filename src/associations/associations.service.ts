@@ -36,12 +36,6 @@ export class AssociationsService {
         const association = await this.repository.create({
             name : name,
             users : []});
-            console.log("c'est passé")
-        //for (let i : number = 0; i < idUsers.length; i++) {
-            //this.service.getById(idUsers[i])
-                        //.then(user => association.users.push(user))
-                        //.catch(error => console.log(error));
-        //}
         association.users = (await this.service.getAll()).filter((user => idOfUsersToAdd.indexOf(user.id) >= 0))
         return this.repository.save(association);
     }

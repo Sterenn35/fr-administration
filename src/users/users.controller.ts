@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Put, Delete, Body, Param , HttpException, HttpStatus} from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Body, Param , HttpException, HttpStatus, UseGuards} from '@nestjs/common';
 
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserInput } from './UserInput';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('users')
 @Controller('users')
@@ -11,6 +12,7 @@ export class UsersController {
 
     constructor(private service: UsersService) {}
 
+    @UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiOperation({
         summary: "Finds all Users"

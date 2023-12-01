@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersService {
@@ -19,11 +20,13 @@ export class UsersService {
     }
 
     async create(firstnameToCreate:string, lastnameToCreate:string, ageToCreate:number, passwordToCreate:string): Promise<User> {
+        const saltOrRounds = 10;
+        const hash = await bcrypt.hash(passwordToCreate, saltOrRounds);
         const user = await this.repository.create({
             lastname: lastnameToCreate, 
             firstname: firstnameToCreate, 
             age: ageToCreate,
-            password: passwordToCreate
+            password: hash
         })
         this.repository.save(user);
         return user;
@@ -42,7 +45,9 @@ export class UsersService {
                 user.age = age
             }
             if (password !== undefined) {
-                user.password = password
+                const saltOrRounds = 10;
+                const hash = await bcrypt.hash(password, saltOrRounds);
+                user.password = hash
             }
         }
         return user;

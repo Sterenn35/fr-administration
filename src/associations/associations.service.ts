@@ -5,6 +5,7 @@ import { UsersService } from 'src/users/users.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Repository } from 'typeorm';
 import { filter } from 'rxjs';
+import { AssociationInput } from './AssociationInput';
 
 @Injectable()
 export class AssociationsService {
@@ -42,6 +43,7 @@ export class AssociationsService {
 
     async update(idToUpdate:number, idUsers:number[], name:string) : Promise<Association> {
         const association = await this.repository.findOne({where : {id: Equal(idToUpdate)}})
+        console.log(association)
         if (association !== undefined) { // si l'association ayant cet id existe, on modifie les éléments fournis
             if (idUsers !== undefined) {
                     association.users = [] // On réinitialise le tableau de users

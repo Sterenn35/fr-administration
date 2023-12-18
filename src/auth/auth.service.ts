@@ -11,7 +11,7 @@ export class AuthService {
     constructor (private service: UsersService, private jwtService: JwtService) {}
     public async validateUser(id: number, password: string) : Promise<User> {
         const user = await this.service.getById(id) // On récupère l'utilisateur ayant cet id
-        if (user != undefined && bcrypt.compare(password, user.password)) {
+        if (user != undefined && await bcrypt.compare(password, user.password)) { // On vérifie que l'utilisateur existe et que c'est le bon mot de passe
             return user
         } else {
             return undefined

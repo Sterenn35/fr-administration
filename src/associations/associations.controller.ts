@@ -1,15 +1,17 @@
-import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, HttpStatus} from '@nestjs/common';
+import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, HttpStatus, UseGuards} from '@nestjs/common';
 import { AssociationsService } from './associations.service';
 import { Association } from './association.entity';
 import { User } from 'src/users/user.entity';
 import { ApiCreatedResponse, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
 import { AssociationInput } from 'src/associations/AssociationInput';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('associations')
 @Controller('associations')
 export class AssociationsController {
     constructor(private service: AssociationsService) {}
 
+    @UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiOperation({
         summary: "Finds all the Association"
@@ -18,6 +20,7 @@ export class AssociationsController {
         return await this.service.getAll();
     }
 
+    @UseGuards(AuthGuard('jwt'))
     @Get(':id')
     @ApiOperation({
         summary: "Finds an Association by ID"
@@ -32,6 +35,7 @@ export class AssociationsController {
         }
     }
 
+    @UseGuards(AuthGuard('jwt'))
     @Get(':id/members')
     @ApiOperation({
         summary: "Finds all the members of an association by ID"

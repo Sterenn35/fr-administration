@@ -10,7 +10,9 @@ export class UsersService {
     constructor(
         @InjectRepository(User)
         private repository: Repository<User>
-    ) {}
+    ) {
+        //this.create("Sterenn", "Le Hir", 20, "password")
+    }
 
     async getAll(): Promise<User[]> {
         return await this.repository.find();

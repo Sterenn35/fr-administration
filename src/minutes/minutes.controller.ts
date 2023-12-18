@@ -11,7 +11,7 @@ import { MinuteUpdate } from './minute.update';
 export class MinutesController {
     constructor(private service: MinutesService) {}
 
-    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiOperation({
         summary: "Finds all the Minute"
@@ -64,11 +64,4 @@ export class MinutesController {
     async deletion(@Param() param) : Promise<void> {
         return await this.service.deletion(+param.id)
     }
-
-
-
-
-
-
-
 }

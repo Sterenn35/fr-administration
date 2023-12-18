@@ -10,9 +10,7 @@ export class UsersService {
     constructor(
         @InjectRepository(User)
         private repository: Repository<User>
-    ) {
-        //this.create("Sterenn", "Le Hir", 20, "password")
-    }
+    ) {}
 
     async getAll(): Promise<User[]> {
         return await this.repository.find();
@@ -56,6 +54,8 @@ export class UsersService {
     }
     
     async deletion(id:number) : Promise<void> {
+        // On va retirer les clés étrangères dans les autres tables
+        
         await this.repository.delete(id); // on retire l'utilisateur 
     }
     

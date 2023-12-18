@@ -11,7 +11,7 @@ import { AuthGuard } from '@nestjs/passport';
 export class AssociationsController {
     constructor(private service: AssociationsService) {}
 
-    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiOperation({
         summary: "Finds all the Association"

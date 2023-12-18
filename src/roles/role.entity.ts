@@ -8,11 +8,11 @@ export class Role {
     @Column()
     public name : string;
 
-    @ManyToOne( () => User, {eager:true})
+    @ManyToOne(() => User, {eager:true, onDelete: "CASCADE"})
     @JoinColumn({name: 'idUser', referencedColumnName: 'id'})
     public user : User;
 
-    @ManyToOne( () => Association, {eager:true})
+    @ManyToOne(() => Association, {eager:true, onDelete: "CASCADE"})
     @JoinColumn({name: 'idAssociation', referencedColumnName: 'id'})
     public association : Association;
 

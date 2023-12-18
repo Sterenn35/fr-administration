@@ -1,6 +1,6 @@
-import { ApiProperty } from "@nestjs/swagger"
+import { ApiProperty } from "@nestjs/swagger";
 
-export class MinuteInput {
+export class MinuteUpdate {
 
     @ApiProperty({
         description: 'The content of the minute, should relate the accepted motions',

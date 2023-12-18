@@ -4,8 +4,6 @@ import { User } from 'src/users/user.entity';
 import { UsersService } from 'src/users/users.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, Repository } from 'typeorm';
-import { filter } from 'rxjs';
-import { AssociationInput } from './AssociationInput';
 
 @Injectable()
 export class AssociationsService {
@@ -21,7 +19,7 @@ export class AssociationsService {
     } 
 
     async getById(idToFind:number): Promise<Association> {
-        return await this.repository.findOne({where: {id: Equal(idToFind)}}); // filter renvoie un tableau, on récupère son élement pour avoir une Association
+        return await this.repository.findOne({where: {id: Equal(idToFind)}});
     }
 
     async getMembers(id:number): Promise<User[]> {

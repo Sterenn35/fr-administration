@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, HttpSta
 import { AssociationsService } from './associations.service';
 import { Association } from './association.entity';
 import { User } from 'src/users/user.entity';
-import { ApiCreatedResponse, ApiOperation, ApiProperty, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AssociationInput } from 'src/associations/AssociationInput';
 import { AuthGuard } from '@nestjs/passport';
 

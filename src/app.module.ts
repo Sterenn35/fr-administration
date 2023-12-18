@@ -10,13 +10,14 @@ import { AuthModule } from './auth/auth.module';
 import { RolesModule } from './roles/roles.module';
 import { Role } from './roles/role.entity';
 import { MinutesModule } from './minutes/minutes.module';
+import { Minute } from './minutes/minute.entity';
 
 @Module({
   imports: [
         TypeOrmModule.forRoot({
           type: 'sqlite',
           database: 'mydatabase.db',
-          entities: [User, Association, Role],
+          entities: [User, Association, Role, Minute],
           synchronize: true,
         }),
         UsersModule, AssociationsModule, AuthModule, RolesModule, MinutesModule],

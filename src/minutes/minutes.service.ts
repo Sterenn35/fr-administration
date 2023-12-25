@@ -26,12 +26,19 @@ export class MinutesService {
     async create(dateToCreate: string, contentToCreate: string, idOfVotersToAdd:number[], idOfAssociationToAdd:number): Promise<Minute> {
         const minute = await this.repository.create({date : dateToCreate, content : contentToCreate});
         const voters = (await this.usersService.getAll()).filter((voter => idOfVotersToAdd.indexOf(voter.id) >= 0));
-        voters.forEach( async (voter) => { // On vérifie que les votants sont membres de l'association
-            const members = await this.associationsService.getMembers(idOfAssociationToAdd);
-            if (!members.includes(voter)) return undefined;
-        })
+        const members = await this.associationsService.getMembers(idOfAssociationToAdd);
+        console.log("members okay");
+        for (const voter of voters) { // On vérifie que les votants sont membres de l'association
+          console.log(voter);
+          console.log(members);
+          console.log(members.indexOf(voter));
+          if (members.indexOf(voter) == -1) { // NE MARCHE PAS ??
+            console.log("Le votant n'est pas membre de l'association");
+            return undefined;
+          }
+        }
         minute.voters = voters // On récupère les votants
-        minute.association = (await this.associationsService.getById(idOfAssociationToAdd)); // On récupère l'association 
+        minute.association = (await this.associationsService.getById(idOfAssociationToAdd)); // On récupère l'association
         return this.repository.save(minute);
     }
 

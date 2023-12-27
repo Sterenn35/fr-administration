@@ -78,7 +78,7 @@ export class MinutesController {
     )
       throw new HttpException(
         `Could not find a Minute with the id ${+param.id}`,
-        HttpStatus.NOT_FOUND,
+        HttpStatus.NOT_FOUND, // Erreur générique à trouver
       );
   }
 

@@ -21,12 +21,13 @@ export class UsersController {
         return await this.service.getAll();
     }
 
-    //@UseGuards(AuthGuard('jwt'))
-    @Get('email')
+    @UseGuards(AuthGuard('jwt'))
+    @Post('email') // It's more like a get but to fetch the result in the front, it's necessary a post method to give data 
     @ApiOperation({
         summary: "Finds a User by Email"
     })
     async getbyEmail(@Body() body): Promise<User> {
+        console.log("Entrée dans la fonction");
         const user = await this.service.getByEmail(body.email);
         if (user === null) {
             throw new HttpException(`Could not find a user with the email : ${body.email}`, HttpStatus.NOT_FOUND);
@@ -36,7 +37,7 @@ export class UsersController {
         }
     }
 
-    //@UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     @Get(':id')
     @ApiOperation({
         summary: "Finds a User by ID"

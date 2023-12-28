@@ -15,4 +15,6 @@ export class AssociationInput {
         type: [Number],
     })
     public idUsers: number[];
+
+    
 }

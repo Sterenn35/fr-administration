@@ -1,5 +1,4 @@
 import { MinutesService } from './minutes.service';
-// eslint-disable-next-line prettier/prettier
 import { Controller, Get, Post, Put, Delete, Param, Body, HttpException, HttpStatus, UseGuards} from '@nestjs/common';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Minute } from './minute.entity';

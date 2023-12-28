@@ -3,8 +3,9 @@ import { AssociationsService } from './associations.service';
 import { Association } from './association.entity';
 import { User } from 'src/users/user.entity';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AssociationInput } from 'src/associations/AssociationInput';
+import { AssociationInput } from 'src/associations/association.input';
 import { AuthGuard } from '@nestjs/passport';
+import { AssociationUpdate } from './association.update';
 
 @ApiTags('associations')
 @Controller('associations')
@@ -60,7 +61,7 @@ export class AssociationsController {
     @ApiOperation({
         summary: "Updates an Association"
     })
-    async update(@Param() param, @Body() input:any) : Promise<void>{
+    async update(@Param() param, @Body() input:AssociationUpdate) : Promise<void>{
         if(await this.service.update(+param.id, input.idUsers, input.name) === undefined) throw new HttpException(`Could not find an association with the id ${+param.id}`, HttpStatus.NOT_FOUND);
     }
 

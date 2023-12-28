@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { User } from './user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Equal, Repository } from 'typeorm';
+import { Equal, ILike, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -19,14 +19,19 @@ export class UsersService {
         return await this.repository.findOne({where: {id: Equal(idToFind)}});
     }
 
-    async create(firstnameToCreate:string, lastnameToCreate:string, ageToCreate:number, passwordToCreate:string): Promise<User> {
+    async getByEmail(emailToFind: string): Promise<User> {
+        return await this.repository.findOne({where: {email: emailToFind}});
+    }
+
+    async create(firstnameToCreate:string, lastnameToCreate:string, ageToCreate:number, passwordToCreate:string, emailToCreate:string): Promise<User> {
         const saltOrRounds = 10;
         const hash = await bcrypt.hash(passwordToCreate, saltOrRounds);
         const user = await this.repository.create({
             lastname: lastnameToCreate, 
             firstname: firstnameToCreate, 
             age: ageToCreate,
-            password: hash
+            password: hash,
+            email:emailToCreate
         })
         this.repository.save(user);
         return user;

@@ -26,9 +26,18 @@ export class UserInput {
     public age: number;
 
     @ApiProperty({
-        description: 'The passworf of the user',
-        example:'mot2P@sse',
+        description: 'The password of the user',
+        example:'azerty35!',
         type: String,
     })
     public password: string;
+
+    @ApiProperty({
+        description: 'The email of the user',
+        example:'john.doe@gmail.com',
+        type: String,
+    })
+    public email: string;
+
+    
 }

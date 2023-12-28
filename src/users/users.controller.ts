@@ -3,7 +3,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param , HttpException, HttpSt
 import { User } from './user.entity';
 import { UsersService } from './users.service';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UserInput } from './UserInput';
+import { UserInput } from './user.input';
 import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('users')
@@ -21,7 +21,22 @@ export class UsersController {
         return await this.service.getAll();
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    //@UseGuards(AuthGuard('jwt'))
+    @Get('email')
+    @ApiOperation({
+        summary: "Finds a User by Email"
+    })
+    async getbyEmail(@Body() body): Promise<User> {
+        const user = await this.service.getByEmail(body.email);
+        if (user === null) {
+            throw new HttpException(`Could not find a user with the email : ${body.email}`, HttpStatus.NOT_FOUND);
+        } 
+        else {
+            return user;
+        }
+    }
+
+    //@UseGuards(AuthGuard('jwt'))
     @Get(':id')
     @ApiOperation({
         summary: "Finds a User by ID"
@@ -44,7 +59,7 @@ export class UsersController {
         summary: "Creates a User"
     })
     public async create(@Body() input: UserInput): Promise<User> {
-        return this.service.create(input.firstname, input.lastname, input.age, input.password);
+        return this.service.create(input.firstname, input.lastname, input.age, input.password, input.email);
     }
 
     @Put(':id')

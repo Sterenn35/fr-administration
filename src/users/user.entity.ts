@@ -12,4 +12,6 @@ export class User {
     public age:number
     @Column()
     public password:string
+    @Column()
+    email: string
 }

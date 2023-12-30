@@ -12,7 +12,7 @@ export class UsersController {
 
     constructor(private service: UsersService) {}
 
-    //@UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiOperation({
         summary: "Finds all Users"
@@ -37,7 +37,7 @@ export class UsersController {
         }
     }
 
-    @UseGuards(AuthGuard('jwt'))
+    
     @Get(':id')
     @ApiOperation({
         summary: "Finds a User by ID"

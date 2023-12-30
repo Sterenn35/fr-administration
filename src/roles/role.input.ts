@@ -15,7 +15,7 @@ export class RoleInput {
     })
     public idUser: number;
 
-    @ApiProperty({ 
+    @ApiProperty({
         description: 'The id of the association',
         example: "1",
         type: Number,

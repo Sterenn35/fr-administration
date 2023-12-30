@@ -54,7 +54,7 @@ export class AssociationsController {
     })
     async create(@Body() input : AssociationInput): Promise<Association> {
         let idUsers = input.idUsers.map(id => +id); // on convertit les id String en number
-        return await this.service.create(idUsers, input.name);
+        return await this.service.create(idUsers, input.description, input.name);
     }
 
     @Put(':id')
@@ -62,7 +62,7 @@ export class AssociationsController {
         summary: "Updates an Association"
     })
     async update(@Param() param, @Body() input:AssociationUpdate) : Promise<void>{
-        if(await this.service.update(+param.id, input.idUsers, input.name) === undefined) throw new HttpException(`Could not find an association with the id ${+param.id}`, HttpStatus.NOT_FOUND);
+        if(await this.service.update(+param.id, input.idUsers, input.description, input.name) === undefined) throw new HttpException(`Could not find an association with the id ${+param.id}`, HttpStatus.NOT_FOUND);
     }
 
     @Delete(':id')

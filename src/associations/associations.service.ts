@@ -31,15 +31,16 @@ export class AssociationsService {
         }
     }
 
-    async create(idOfUsersToAdd:number[], name:string): Promise<Association> {
+    async create(idOfUsersToAdd:number[], descriptionToCreate:string, nameToCreate:string): Promise<Association> {
         const association = await this.repository.create({
-            name : name,
+            name : nameToCreate,
+            description : descriptionToCreate,
             users : []});
         association.users = (await this.service.getAll()).filter((user => idOfUsersToAdd.indexOf(user.id) >= 0))
         return this.repository.save(association);
     }
 
-    async update(idToUpdate:number, idUsers:number[], name:string) : Promise<Association> {
+    async update(idToUpdate:number, idUsers:number[], description: string, name:string) : Promise<Association> {
         const association = await this.repository.findOne({where : {id: Equal(idToUpdate)}})
         console.log(association)
         if (association !== undefined) { // si l'association ayant cet id existe, on modifie les éléments fournis

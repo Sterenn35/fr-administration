@@ -57,6 +57,7 @@ export class AssociationsService {
                 association.description = description
             }
         }
+        this.repository.save(association);
         return association;
     }
     

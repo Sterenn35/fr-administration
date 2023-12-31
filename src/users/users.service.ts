@@ -40,14 +40,16 @@ export class UsersService {
     async update(idToFind:number, lastname:string, firstname:string, age:number, password:string, email:string) : Promise<User> {
         const user = await this.repository.findOne({where: {id: Equal(idToFind)}});
         if (user !== undefined) { // si l'utilisateur ayant cet id existe, on modifie les éléments fournis 
+            console.log(lastname, firstname, age, email);
             if (lastname !== undefined) {
                 user.lastname = lastname;
             }
             if (firstname !== undefined) {
                 user.firstname = firstname;
+                console.log(user.firstname);
             } 
             if (age !== undefined) {
-                user.age = age
+                user.age = age;
             }
             if (password !== undefined) {
                 const saltOrRounds = 10;
@@ -58,6 +60,7 @@ export class UsersService {
                 user.email = email
             }
         }
+        this.repository.save(user);
         return user;
     }
     

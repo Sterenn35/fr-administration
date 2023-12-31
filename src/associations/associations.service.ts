@@ -53,6 +53,9 @@ export class AssociationsService {
             if (name !== undefined) {
                 association.name = name;
             }
+            if (description !== undefined) {
+                association.description = description
+            }
         }
         return association;
     }

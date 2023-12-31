@@ -37,7 +37,7 @@ export class UsersService {
         return user;
     }
 
-    async update(idToFind:number, lastname:string, firstname:string, age:number, password:string) : Promise<User> {
+    async update(idToFind:number, lastname:string, firstname:string, age:number, password:string, email:string) : Promise<User> {
         const user = await this.repository.findOne({where: {id: Equal(idToFind)}});
         if (user !== undefined) { // si l'utilisateur ayant cet id existe, on modifie les éléments fournis 
             if (lastname !== undefined) {
@@ -53,6 +53,9 @@ export class UsersService {
                 const saltOrRounds = 10;
                 const hash = await bcrypt.hash(password, saltOrRounds);
                 user.password = hash
+            }
+            if (email != undefined) {
+                user.email = email
             }
         }
         return user;

@@ -60,7 +60,11 @@ export class UsersController {
         summary: "Creates a User"
     })
     public async create(@Body() input: UserInput): Promise<User> {
-        return this.service.create(input.firstname, input.lastname, input.age, input.password, input.email);
+        const user = this.service.create(input.firstname, input.lastname, input.age, input.password, input.email);
+        if (user === undefined) throw new HttpException(`User already exists`, HttpStatus.FOUND);
+        else {
+            return user;
+        }
     }
 
     @Put(':id')

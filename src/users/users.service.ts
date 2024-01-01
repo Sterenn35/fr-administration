@@ -24,17 +24,23 @@ export class UsersService {
     }
 
     async create(firstnameToCreate:string, lastnameToCreate:string, ageToCreate:number, passwordToCreate:string, emailToCreate:string): Promise<User> {
-        const saltOrRounds = 10;
-        const hash = await bcrypt.hash(passwordToCreate, saltOrRounds);
-        const user = await this.repository.create({
-            lastname: lastnameToCreate, 
-            firstname: firstnameToCreate, 
-            age: ageToCreate,
-            password: hash,
-            email:emailToCreate
-        })
+        const userExist = await this.getByEmail(emailToCreate); 
+        if (userExist === null) {
+            const saltOrRounds = 10;
+            const hash = await bcrypt.hash(passwordToCreate, saltOrRounds);
+            const user = await this.repository.create({
+                lastname: lastnameToCreate, 
+                firstname: firstnameToCreate, 
+                age: ageToCreate,
+                password: hash,
+                email:emailToCreate
+            })
         this.repository.save(user);
         return user;
+        } else { // L'utilisateur existe déjà
+            console.log(userExist);
+            return undefined; 
+        }
     }
 
     async update(idToFind:number, lastname:string, firstname:string, age:number, password:string, email:string) : Promise<User> {

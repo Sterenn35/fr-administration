@@ -26,4 +26,14 @@ export class AuthService {
             id: user.id
         };
     }
+
+    async register(firstname:string, lastname:string, age:number, email:string, password: string) {
+        return await this.service.create(
+              firstname,
+              lastname,
+              age,
+              password,
+              email,
+        );
+    }
 }

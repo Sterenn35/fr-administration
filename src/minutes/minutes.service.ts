@@ -23,6 +23,16 @@ export class MinutesService {
         return await this.repository.findOne({where: {id: Equal(idToFind)}});
     }
 
+    async getMinutesByIdAsso(idAssociation: number): Promise<Minute[]> {
+        const association = await this.associationsService.getById(idAssociation);
+        if (association === undefined) {
+          return undefined; 
+        } else {
+          const minutes = (await this.getAll()).filter((asso => idAssociation === asso.association.id));
+          return minutes;
+        }
+      }
+
     async create(dateToCreate: string, contentToCreate: string, idOfVotersToAdd:number[], idOfAssociationToAdd:number): Promise<Minute> {
         const voters = (await this.usersService.getAll()).filter((voter => idOfVotersToAdd.indexOf(voter.id) >= 0));
         const members = await this.associationsService.getMembers(idOfAssociationToAdd);

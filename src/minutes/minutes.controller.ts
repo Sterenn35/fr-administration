@@ -5,6 +5,7 @@ import { Minute } from './minute.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { MinuteInput } from './minute.input';
 import { MinuteUpdate } from './minute.update';
+import { AssociationsService } from 'src/associations/associations.service';
 
 @ApiTags('minutes')
 @Controller('minutes')
@@ -20,7 +21,6 @@ export class MinutesController {
     return await this.service.getAll();
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOperation({
     summary: 'Finds a Minute by ID',
@@ -34,6 +34,22 @@ export class MinutesController {
       );
     } else {
       return association;
+    }
+  }
+
+  @Get('/association/:idAssociation')
+  @ApiOperation({
+    summary: 'Finds a Minute by ID',
+  })
+  async getMinutesByIdAsso(@Param() param): Promise<Minute[]> {
+    const minutes = await this.service.getMinutesByIdAsso(+param.idAssociation);
+    if (minutes === undefined) {
+      throw new HttpException(
+        `Could not find an association with the id ${+param.id}`,
+        HttpStatus.NOT_FOUND,
+      );
+    } else {
+      return minutes;
     }
   }
 

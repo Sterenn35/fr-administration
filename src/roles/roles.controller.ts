@@ -43,7 +43,7 @@ export class RolesController {
         return this.service.create(input.name, input.idUser, input.idAssociation);
     }
 
-    @Put(':idUsers/:idAssociation')
+    @Put(':idUser/:idAssociation')
     @ApiOperation({
         summary: "Updates a Role"
     })
@@ -51,7 +51,7 @@ export class RolesController {
         if(await this.service.update(+param.idUser, +param.idAssociation, input.name) === undefined) throw new HttpException(`Could not find a role with the pair of id ${+param.idUser}, ${+param.idAssociation}`, HttpStatus.NOT_FOUND);
     }
 
-    @Delete(':idUsers/:idAssociation')
+    @Delete(':idUser/:idAssociation')
     @ApiOperation({
         summary: "Deletes a Role"
     })

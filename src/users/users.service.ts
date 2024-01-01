@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Equal, ILike, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
+
 @Injectable()
 export class UsersService {
     
@@ -22,6 +23,7 @@ export class UsersService {
     async getByEmail(emailToFind: string): Promise<User> {
         return await this.repository.findOne({where: {email: emailToFind}});
     }
+
 
     async create(firstnameToCreate:string, lastnameToCreate:string, ageToCreate:number, passwordToCreate:string, emailToCreate:string): Promise<User> {
         const userExist = await this.getByEmail(emailToCreate); 
@@ -70,9 +72,7 @@ export class UsersService {
         return user;
     }
     
-    async deletion(id:number) : Promise<void> {
-        // On va retirer les clés étrangères dans les autres tables
-        
+    async deletion(id:number) : Promise<void> {        
         await this.repository.delete(id); // on retire l'utilisateur 
     }
     

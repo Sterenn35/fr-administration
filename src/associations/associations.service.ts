@@ -23,12 +23,27 @@ export class AssociationsService {
     }
 
     async getMembers(id:number): Promise<User[]> {
-        const association = await this.getById(id) // on récupère l'association
+        const association = await this.getById(id); // on récupère l'association
         if (association === undefined) {
             return undefined;
         }
-        else {return association.users;
+        else {
+            return association.users;
         }
+    }
+
+    async getByMember(id:number): Promise<Association[]> {
+        const user = await this.service.getById(id);
+        if (user === undefined) return undefined;
+        const associations = await this.getAll();
+        let associationsWhereIsMember = [];
+        for (const asso of associations) {
+            const members = await this.getMembers(asso.id);
+            if (members.findIndex(member => id === member.id) !== -1) {
+                associationsWhereIsMember.push(asso);
+            }
+        }
+        return associationsWhereIsMember;
     }
 
     async create(idOfUsersToAdd:number[], descriptionToCreate:string, nameToCreate:string): Promise<Association> {

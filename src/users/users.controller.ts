@@ -5,6 +5,7 @@ import { UsersService } from './users.service';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserInput } from './user.input';
 import { AuthGuard } from '@nestjs/passport';
+import { Association } from 'src/associations/association.entity';
 
 @ApiTags('users')
 @Controller('users')

@@ -21,7 +21,6 @@ export class AssociationsController {
         return await this.service.getAll();
     }
 
-    @UseGuards(AuthGuard('jwt'))
     @Get(':id')
     @ApiOperation({
         summary: "Finds an Association by ID"
@@ -36,15 +35,27 @@ export class AssociationsController {
         }
     }
 
-    @UseGuards(AuthGuard('jwt'))
     @Get(':id/members')
     @ApiOperation({
         summary: "Finds all the members of an association by ID"
     })
     async getMembers(@Param() param): Promise<User[]> {
-       return await this.service.getMembers(+param.id)
+       return await this.service.getMembers(+param.id);
     }
     
+    @Get(':id/associations')
+    @ApiOperation({
+        summary: "Finds all associations where a user is member"
+    })
+    async getByMember(@Param() param): Promise<Association[]> {
+        const associations = await this.service.getByMember(+param.id); 
+        if (associations === undefined) {
+            throw new HttpException(`Could not find a user with the id ${+param.id}`, HttpStatus.NOT_FOUND);
+        } 
+        else {
+            return associations;
+        }
+    }
     @Post()
     @ApiCreatedResponse({
         description: 'The assocation has been successfully created.'

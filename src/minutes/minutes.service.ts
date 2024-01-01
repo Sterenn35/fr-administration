@@ -28,9 +28,6 @@ export class MinutesService {
         const members = await this.associationsService.getMembers(idOfAssociationToAdd);
         if (voters.length === 0) return undefined; // si le ou les utilisateur(s) n'existe(nt) pas
         for (const voter of voters) { // On vérifie que les votants sont membres de l'association
-          console.log(voter);
-          console.log(members);
-          console.log(members.indexOf(voter));
           if (members.findIndex(member => voter.id === member.id) === -1){
             console.log("Le votant n'est pas membre de l'association");
             return undefined;

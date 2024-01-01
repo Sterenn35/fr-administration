@@ -38,6 +38,7 @@ export class RolesService {
         if (role !== undefined) { // si l'association ayant cet id existe, on modifie les éléments fournis
             role.name = name
         }
+        this.repository.save(role);
         return role;
     }
     

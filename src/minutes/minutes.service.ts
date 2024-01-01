@@ -65,6 +65,7 @@ export class MinutesService {
                 if (association !== undefined) minute.association = association
             }
         }
+        this.repository.save(minute);
         return minute;
     }
     

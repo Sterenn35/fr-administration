@@ -40,7 +40,6 @@ export class UsersService {
         this.repository.save(user);
         return user;
         } else { // L'utilisateur existe déjà
-            console.log(userExist);
             return undefined; 
         }
     }
@@ -48,13 +47,11 @@ export class UsersService {
     async update(idToFind:number, lastname:string, firstname:string, age:number, password:string, email:string) : Promise<User> {
         const user = await this.repository.findOne({where: {id: Equal(idToFind)}});
         if (user !== undefined) { // si l'utilisateur ayant cet id existe, on modifie les éléments fournis 
-            console.log(lastname, firstname, age, email);
             if (lastname !== undefined) {
                 user.lastname = lastname;
             }
             if (firstname !== undefined) {
                 user.firstname = firstname;
-                console.log(user.firstname);
             } 
             if (age !== undefined) {
                 user.age = age;

@@ -7,12 +7,13 @@ import { AssociationInput } from 'src/associations/association.input';
 import { AuthGuard } from '@nestjs/passport';
 import { AssociationUpdate } from './association.update';
 
+
 @ApiTags('associations')
 @Controller('associations')
 export class AssociationsController {
     constructor(private service: AssociationsService) {}
 
-    //@UseGuards(AuthGuard('jwt'))
+    @UseGuards(AuthGuard('jwt'))
     @Get()
     @ApiOperation({
         summary: "Finds all the Association"
@@ -20,7 +21,7 @@ export class AssociationsController {
     async getAll(): Promise<Association[]> {
         return await this.service.getAll();
     }
-
+    @UseGuards(AuthGuard('jwt'))
     @Get(':id')
     @ApiOperation({
         summary: "Finds an Association by ID"

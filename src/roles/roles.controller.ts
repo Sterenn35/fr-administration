@@ -22,13 +22,13 @@ export class RolesController {
     @ApiOperation({
         summary: "Finds a Role by ID"
     })
-    async getById(@Param() param): Promise<String> {
+    async getById(@Param() param): Promise<Role> {
         const role = await this.service.getById(+param.idUser, +param.idAssociation); 
         if (role === undefined) {
             throw new HttpException(`Could not find a role with this pair of id ${+param.idUser}, ${+param.idAssociation}`, HttpStatus.NOT_FOUND);
         } 
         else {
-            return role.name;
+            return role;
         }
     }
 

@@ -39,6 +39,7 @@ export class RolesService {
             role.name = name
         }
         this.repository.save(role);
+        //console.log(`le rôle ${role.name} a été attribué à l'utilisateur  ${idUserToUpdate} dans l'association ${idUserToUpdate}`)
         return role;
     }
     

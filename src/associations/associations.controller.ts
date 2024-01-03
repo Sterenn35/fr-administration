@@ -28,7 +28,7 @@ export class AssociationsController {
     })
     async getById(@Param() param): Promise<Association> {
         const association = await this.service.getById(+param.id); 
-        if (association === undefined) {
+        if (association === null) {
             throw new HttpException(`Could not find an association with the id ${+param.id}`, HttpStatus.NOT_FOUND);
         } 
         else {

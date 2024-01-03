@@ -45,7 +45,7 @@ export class UsersController {
     })
     async getById(@Param() param): Promise<User> {
         const user = await this.service.getById(+param.id); 
-        if (user === undefined) {
+        if (user === null) {
             throw new HttpException(`Could not find a user with the id ${+param.id}`, HttpStatus.NOT_FOUND);
         } 
         else {

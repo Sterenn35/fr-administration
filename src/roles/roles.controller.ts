@@ -24,7 +24,7 @@ export class RolesController {
     })
     async getById(@Param() param): Promise<Role> {
         const role = await this.service.getById(+param.idUser, +param.idAssociation); 
-        if (role === undefined) {
+        if (role === null) {
             throw new HttpException(`Could not find a role with this pair of id ${+param.idUser}, ${+param.idAssociation}`, HttpStatus.NOT_FOUND);
         } 
         else {

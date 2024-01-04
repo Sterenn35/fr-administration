@@ -24,9 +24,10 @@ export class RolesController {
     })
     async getById(@Param() param): Promise<Role> {
         const role = await this.service.getById(+param.idUser, +param.idAssociation); 
-        if (role === null) {
+        if (role === null) { // le role n'existe pas 
             throw new HttpException(`Could not find a role with this pair of id ${+param.idUser}, ${+param.idAssociation}`, HttpStatus.NOT_FOUND);
-        } 
+        } if (role === undefined) 
+        throw new HttpException(`Could not find a member with id ${+param.idUser} or association with ${+param.idAssociation}`, HttpStatus.NOT_FOUND);
         else {
             return role;
         }
@@ -40,7 +41,14 @@ export class RolesController {
         summary: "Creates a role"
     })
     public async create(@Body() input: RoleInput): Promise<Role> {
-        return this.service.create(input.name, input.idUser, input.idAssociation);
+        const role = await this.service.create(input.name, input.idUser, input.idAssociation);
+        if (role === null) { // le role existe déjà
+            throw new HttpException(`Already exist a role for the user with id ${input.idUser} in association with id ${input.idAssociation}`, HttpStatus.FOUND);
+        } if (role === undefined) 
+            throw new HttpException(`Could not find a member with id ${input.idUser} or association with ${input.idAssociation}`, HttpStatus.NOT_FOUND);
+        else {
+            return role;
+        }
     }
 
     @Put(':idUser/:idAssociation')

@@ -24,8 +24,21 @@ export class RolesService {
     }
 
     async create(nameToAdd:string, idUserToAdd:number, idAssociationToAdd:number): Promise<Role> {
+    
         const userToAdd = await this.usersService.getById(idUserToAdd)
-        const associationToAdd = await this.associationsService.getById(idAssociationToAdd)
+        const associationToAdd = await this.associationsService.getById(idAssociationToAdd);
+        // on vérifie que l'association existe, que le user existe et qu'il est membre de l'association 
+        if (userToAdd === null || associationToAdd === null) {
+            return undefined; 
+        }
+        const members = await this.associationsService.getMembers(idAssociationToAdd);
+        if (members.findIndex(member => idUserToAdd === member.id) === -1) {
+            return undefined;
+        }
+        const roleExist = await this.getById(idUserToAdd, idAssociationToAdd);
+        if (roleExist !== null) {
+            return null;
+        }
         const role = await this.repository.create({
             name : nameToAdd,
             user : userToAdd,

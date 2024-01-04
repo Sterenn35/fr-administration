@@ -6,6 +6,7 @@ import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserInput } from './user.input';
 import { AuthGuard } from '@nestjs/passport';
 import { Association } from 'src/associations/association.entity';
+import { UserUpdate } from './user.update';
 
 @ApiTags('users')
 @Controller('users')
@@ -28,7 +29,6 @@ export class UsersController {
         summary: "Finds a User by Email"
     })
     async getbyEmail(@Body() body): Promise<User> {
-        console.log("Entrée dans la fonction");
         const user = await this.service.getByEmail(body.email);
         if (user === null) {
             throw new HttpException(`Could not find a user with the email : ${body.email}`, HttpStatus.NOT_FOUND);
@@ -72,7 +72,7 @@ export class UsersController {
     @ApiOperation({
         summary: "Updates a User"
     })
-    async update(@Param() param, @Body() input:any) : Promise<void> {
+    async update(@Param() param, @Body() input:UserUpdate) : Promise<void> {
         if(await this.service.update(+param.id, input.lastname, input.firstname, input.age, input.password, input.email) === undefined) throw new HttpException(`Could not find a user with the id ${+param.id}`, HttpStatus.NOT_FOUND);
     }
 

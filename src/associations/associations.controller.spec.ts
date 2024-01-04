@@ -32,6 +32,7 @@ describe('getAll', () => {
     const expected = Promise.all([{ 
         id: 0,
         name: 'Assoc1',
+        description : 'lorem ipsum',
         users: []
     }]);
     jest.spyOn(service, 'getAll').mockImplementation(() => expected);
@@ -46,11 +47,13 @@ describe('getById', () => {
       lastname: 'Doe',
       firstname: 'John',
       age: 23,
+      email : 'john.doe@example.com',
       password: 'hola'
     }
     const expected = await Promise.all([{ 
       id: 0, 
       name: 'Assoc1',
+      description : 'lorem ipsum',
       users:[user]
     }]);
     jest.spyOn(service, 'getById').mockImplementation(id => {
@@ -67,15 +70,17 @@ describe('create', () => {
       lastname: 'Doe',
       firstname: 'John',
       age: 23,
+      email : 'john.doe@example.com',
       password: 'hola'
     }
     const expected = await Promise.all([{ 
       id: 0, 
       name: 'Assoc1',
+      description : 'lorem ipsum',
       users:[user]
     }]);
     jest.spyOn(service, 'create').mockImplementation( () => { return Promise.resolve(expected[0])});
-    expect(await controller.create({name:'Assoc1', idUsers:[0]})).toBe(await expected[0]);
+    expect(await controller.create({name:'Assoc1', description : 'lorem ipsum', idUsers:[0]})).toBe(await expected[0]);
   })
 });
 

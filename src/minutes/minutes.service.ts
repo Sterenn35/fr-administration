@@ -51,14 +51,22 @@ export class MinutesService {
 
     async update(idToUpdate:number, dateToUpdate: string, contentToUpdate: string, idvotersToUpdate:number[], idOfAssociationToUpdate: number) : Promise<Minute> {
         const minute = await this.repository.findOne({where : {id: Equal(idToUpdate)}})
-        if (minute !== undefined) { // si la minute ayant cet id existe, on modifie les éléments fournis
+        if (minute !== null) { // si la minute ayant cet id existe, on modifie les éléments fournis
+            if (idOfAssociationToUpdate !== undefined) {
+                const association = await this.associationsService.getById(idOfAssociationToUpdate);
+                if (association !== null) minute.association = association
+            }
             if (idvotersToUpdate !== undefined) {
                 minute.voters = [] // On réinitialise le tableau de users
-                const members = await this.associationsService.getMembers(idOfAssociationToUpdate) // On récupère les membres
+                console.log("affectation des votants");
+                const members = await this.associationsService.getMembers(minute.association.id) // On récupère les membres
+                console.log("association trouvée")
                 for (let i : number = 0; i < idvotersToUpdate.length; i++) {
                     const voter = await this.usersService.getById(idvotersToUpdate[i]); // On récupère le votant
-                    if (!members.includes(voter)) return undefined; // erreur ==> le votant n'est pas un membre de l'association
-                    else minute.voters.push()
+                    if (members.findIndex(member => voter.id === member.id) === -1) {
+                        return undefined; // erreur ==> le votant n'est pas un membre de l'association
+                    }
+                    else minute.voters.push(voter);
                 }
             }
             if (dateToUpdate !== undefined) {
@@ -67,11 +75,9 @@ export class MinutesService {
             if (contentToUpdate !== undefined) {
                 minute.content = contentToUpdate
             }
-            if (idOfAssociationToUpdate !== undefined) {
-                const association = await this.associationsService.getById(idOfAssociationToUpdate);
-                if (association !== undefined) minute.association = association
-            }
+            
         }
+        console.log(minute);
         this.repository.save(minute);
         return minute;
     }

@@ -39,7 +39,6 @@ export class MinutesService {
         if (voters.length === 0) return undefined; // si le ou les utilisateur(s) n'existe(nt) pas
         for (const voter of voters) { // On vérifie que les votants sont membres de l'association
           if (members.findIndex(member => voter.id === member.id) === -1){
-            console.log("Le votant n'est pas membre de l'association");
             return undefined;
           }
         }
@@ -58,9 +57,7 @@ export class MinutesService {
             }
             if (idvotersToUpdate !== undefined) {
                 minute.voters = [] // On réinitialise le tableau de users
-                console.log("affectation des votants");
                 const members = await this.associationsService.getMembers(minute.association.id) // On récupère les membres
-                console.log("association trouvée")
                 for (let i : number = 0; i < idvotersToUpdate.length; i++) {
                     const voter = await this.usersService.getById(idvotersToUpdate[i]); // On récupère le votant
                     if (members.findIndex(member => voter.id === member.id) === -1) {
@@ -77,7 +74,6 @@ export class MinutesService {
             }
             
         }
-        console.log(minute);
         this.repository.save(minute);
         return minute;
     }
